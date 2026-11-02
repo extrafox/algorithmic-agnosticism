@@ -1,0 +1,12 @@
+# LaTeX build artifacts
+*.aux
+*.bbl
+*.blg
+*.log
+*.out
+*.toc
+paper/main.pdf
+# macOS
+.DS_Store
+# Private working files (not published)
+private/

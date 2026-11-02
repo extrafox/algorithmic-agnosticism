@@ -1,0 +1,261 @@
+\section{Framework and premises}\label{sec:framework}
+
+\subsection{Records, models, worlds}
+
+Fix a finite alphabet $\Sig$ with $|\Sig|\ge 2$. Write $\Str$ for the finite strings
+over $\Sig$, $\Seq$ for the infinite sequences, and $u\sqsubseteq v$ for the prefix
+order on strings and sequences.
+
+\begin{definition}[Record]\label{def:record}
+An \emph{observation} is a pair $(x,y)\in\Str\times\Str$: a setting $x$ and a
+recorded outcome $y$. A \emph{record} is a finite sequence
+$\big((x_0,y_0),\dots,(x_{n-1},y_{n-1})\big)$ of observations; repetitions are
+allowed, so repeated trials keep their order and multiplicity. Records grow by
+extension. We write $\rec$ also for the underlying set of observations when order
+does not matter, and $\dom(\rec)=\{x_i\}_{i<n}$. A record is \emph{functional} if no
+setting occurs with two distinct outcomes. Fixing a prefix-free pairing code, a
+record is encoded as a single string $r\in\Str$, and extension of records is prefix
+extension of their codes.
+\end{definition}
+
+Fix an acceptable (G\"odel) numbering $(\ph{e})_{e\in\N}$ of the partial computable
+functions $\Str\rightharpoonup\Str$ \citep{rogers1967}; write $\ph{e}(x)\conv$ when
+the computation halts.
+
+\begin{definition}[Model]\label{def:model}\label{def:probmodel}
+(a) A \emph{deterministic model} is an index $e\in\N$. It is \emph{consistent} with a
+functional record $\rec$ if $\ph{e}(x)\conv=y$ for every $(x,y)\in\rec$; we write
+$\Cons(\rec)$ for the set of such $e$. Two models \emph{diverge off} $\rec$ if they
+give different outputs at some setting not in $\dom(\rec)$.
+(b) For a fixed sequence of settings, fix an effective enumeration
+$\nu_1,\nu_2,\dots$ of the lower semicomputable semimeasures on outcome sequences
+\citep{li-vitanyi2019}. A \emph{stochastic model} is an index $i\ge1$; $\nu_i(r)$ is the
+probability it assigns to outcomes beginning with $r$, and it is consistent with a
+record with outcome string $r$ if $\nu_i(r)>0$.
+(c) Two models are \emph{extensionally equal} if they have the same extension:
+$\ph{e}=\ph{e'}$ for deterministic models, $\nu_i=\nu_j$ for stochastic ones.
+\end{definition}
+
+\begin{definition}[World]\label{def:world}
+A \emph{world} is whatever produces the records. A world is \emph{computable} if its
+record-producing behavior is given by a total computable function $f:\Str\to\Str$
+(deterministic) or a computable measure $\mu$ (stochastic). We make no claim that the
+actual world is computable; computable worlds are the worlds that some usable model
+could describe exactly.
+\end{definition}
+
+\begin{definition}[Final model; theory of everything]\label{def:final}
+A model is \emph{final} for a world if it agrees with every record the world can
+produce: $\ph{e}=f$ in the deterministic case, $\nu_i=\mu$ in the stochastic case. A
+\emph{theory of everything} is any model offered as final.
+\end{definition}
+
+\begin{definition}[Method; certification; identification]\label{def:learner}
+A \emph{method} is a function from (codes of) records to models; a \emph{randomized}
+method also reads bits from a random source. A method \emph{certifies} a model at a
+record $\rec$ if on $\rec$ it outputs that model together with the verdict ``final''.
+Let $x_0,x_1,\dots$ be the length-lexicographic enumeration of the settings. The
+\emph{canonical presentation} of a total $f$ is the sequence of records
+$\rec_{f\restriction n}=\big((x_0,f(x_0)),\dots,(x_{n-1},f(x_{n-1}))\big)$, $n\in\N$.
+A method that has already observed a record $\rec$ consistent with $f$ is presented
+with $f$ \emph{after} $\rec$: it receives the records $\rec\frown\rec_{f\restriction n}$,
+$n\in\N$ (for empty $\rec$, the canonical presentation). It \emph{identifies $f$ in
+the limit} after $\rec$ if its outputs on this presentation are eventually constant at
+an index of $f$ \citep{gold1967}; it does not have to announce when this has happened.
+A method that is undefined on some record of the presentation does not identify $f$.
+A randomized method identifies $f$ \emph{with probability $p$} if the set of random
+bit sequences on which it identifies $f$ has probability $p$. A method is
+\emph{guaranteed} to find a final theory after $\rec$ if it identifies in the limit,
+after $\rec$, every total computable world consistent with $\rec$; a randomized method
+is guaranteed with probability $p$ if it identifies each such world with
+probability at least $p$.
+\end{definition}
+
+\begin{definition}[Known to be final]\label{def:known}
+A theory $T$ is \emph{known to be final}, in the sense used here, on a record $\rec$ if
+$\rec$ rules out every rival consistent with it: $T$ is final (\cref{def:final}) for every computable
+world that can produce $\rec$: for a deterministic theory, every total computable $f$ consistent with
+$\rec$; for a stochastic theory, every computable measure $\mu$ with $\mu(r)>0$, where
+$r$ is the outcome string of $\rec$.
+Equivalently, a method that certifies $T$ at $\rec$ is right in every such world.
+\end{definition}
+
+We take \cref{def:known} as the standard for the hope of a final theory: finality recognized
+from the evidence. It counts only computable
+worlds as rivals, so it is weaker than a standard that counts every world, and a result
+that defeats it defeats every stronger one.
+
+\begin{definition}[Constraint; selection]\label{def:constraint}
+A \emph{constraint} (or \emph{bias}) is given by a cost $c_\rec:\N\to\N\cup\{\infty\}$
+on models, possibly depending on the record. Its \emph{selection} at a functional
+record $\rec$ is
+\[
+  \Sel_c(\rec)=\operatorname*{arg\,min}_{e\in\Cons(\rec)} c_\rec(e).
+\]
+A constraint is \emph{imposed} if the record does not determine it: other constraints,
+equally consistent with the record, select differently on the same record, and nothing
+in the record decides between them.
+\end{definition}
+
+``Which model is final'' can be asked at three levels: of \emph{programs} (indices),
+of \emph{extensions} (the behavior $\ph{e}$), and of \emph{chance hypotheses}
+(measures).
+
+\subsection{Premises}
+
+\begin{premise}[Finite record]\label{prem:record}
+Every use of any system by any human or machine yields a record in the sense of
+\cref{def:record}.
+\end{premise}
+
+\Cref{prem:record} is close to definitional. Uses take finite time; instruments have
+finite resolution; outcomes are written down, stored or acted upon in finite memory.
+Even an instrument reading a continuous quantity reports a finite-precision value.
+\Cref{prem:record} is a claim about \emph{interfaces}, not about the systems behind
+them: it says nothing about whether the world is discrete, continuous, computable or
+random.
+\emph{Refuted by:} a use of some system whose outcome is stored or acted on as an
+infinite object, for instance an instrument whose reading is available as an exact
+real number.
+
+\begin{premise}[Usable systems are effective]\label{prem:effective}
+Every system that any human or machine can use to produce outputs from inputs---in
+particular every method by which records are turned into predictions or model
+choices---is effective: its input--output behavior is computable or, if it is
+stochastic, is described by a computable probability measure on outputs.
+\end{premise}
+
+\Cref{prem:effective} is an assumption; it does not follow from \cref{prem:record}.
+It is Piccinini's \emph{modest} physical Church--Turing thesis
+\citep{piccinini2011,piccinini2015}---every function computable by a process an
+observer can \emph{use} is Turing-computable---whose usability conditions we adopt:
+readable inputs and outputs, a rule specifiable independently of the process,
+repeatability, settability, physical constructibility and reliability
+\citep{piccinini2015}, a list he does not intend to be exhaustive. We extend it
+in scope only: through the measure clause to stochastic systems, and to every usable
+method, including methods of choosing models.
+A stochastic method in the sense of \cref{prem:effective} is a computable machine with
+access to fair coin flips, the model of \citet{pitt1989}; every computable measure on
+outputs is realized by such a machine.
+
+\emph{Refuted by:} a usable hypercomputer, that is, a system whose non-computable
+behavior can be specified, relied on and put to work.
+
+\paragraph{Defense.} The three standard candidates for a usable hypercomputer fail.
+
+\emph{(a) Continuous theories.} A theory stated over the reals is used by computing
+its consequences to finite precision, and whatever a theory yields in that way is
+computable in the sense of computable analysis \citep{weihrauch2000}. Some
+continuous theories have non-computable values---the wave equation has computable
+initial data whose unique (weak) solution at a later time is not computable
+\citep{pourel-richards1981}---and recurrent networks with real-valued weights decide
+non-recursive languages \citep{siegelmann-sontag1994}. But such values cannot be
+used: no finite record can read them out. In the network case the non-computability
+comes out only where it has been put in, through non-computable weights
+\citep{davis2004}.
+
+\emph{(b) Relativistic hypercomputers.} In Malament--Hogarth spacetimes, for example
+that of a rotating (Kerr) black hole, an observer could in principle receive, in finite proper time, the result of an infinite
+computation \citep{hogarth1992,etesi-nemeti2002}. But the observer cannot rule out
+that a ``does not halt'' verdict reflects spurious signals or a failure of the device
+rather than an infinite computation, so the output cannot be relied on; Earman and
+Norton, who make this point, regard such computation as an open question rather than
+an impossibility \citep{earman-norton1993}.
+
+\emph{(c) Quantum randomness.} A random source can produce a non-computable sequence,
+but it cannot be steered to compute anything specified in advance.
+
+\begin{theorem}[Randomness adds no power to compute functions;
+  {\citealp[Thms.~2--3]{deleeuw1956}}]\label{thm:q-powerless}
+If $p$ is a computable real and a probabilistic machine with a $p$-biased coin
+enumerates a set with positive probability, the set is computably enumerable; if it
+outputs $f(n)$ with probability greater than $\tfrac12$ on every input $n$, then $f$
+is computable.
+\end{theorem}
+
+\begin{proposition}[Born statistics are computable]\label{prop:q-born-computable}
+Let a finite-dimensional quantum system have a computable initial state $\psi$, a
+computable unitary $U$ and a measurement with computable projectors $\{P_k\}$. Then
+the outcome probabilities $\lVert P_kU\psi\rVert^2$ \citep{born1926} are computable
+reals, and the outcomes of repeated independent measurements form a computable
+measure.
+\end{proposition}
+
+\begin{proof}[Proof sketch]
+Matrix products, exponentials of computable matrices and norms are computable
+operations on computable reals \citep{weihrauch2000,pourel-richards1989}; a product
+of computable probabilities defines a computable product measure.
+\end{proof}
+
+A quantum random number generator is therefore a computable stochastic process in
+the sense of \cref{prem:effective}: what can be relied on about it is a computable
+measure, and by \cref{thm:q-powerless} its randomness computes nothing new. A coin
+with a non-computable bias would act as an oracle, but no finite record could show
+that its bias is non-computable, so it could not be relied on as one.
+
+\subsection{The argument in outline}\label{sec:outline}
+
+\Cref{tab:outline} is the map of the argument. It lists every step in the order of the
+sections that prove it, with the level at which each holds.
+
+\begin{table}[!htbp]
+\centering
+\small
+\begin{tabular}{@{}l>{\raggedright\arraybackslash}p{0.55\linewidth}%
+>{\raggedright\arraybackslash}p{0.13\linewidth}%
+>{\raggedright\arraybackslash}p{0.17\linewidth}@{}}
+\toprule
+Step & Statement & Status & Level \\
+\midrule
+Known & To know that a theory is final is for the record to rule out every
+  computable rival (\cref{def:known}) & definition & --- \\
+\ref{prem:record} & Every use yields a finite record & premise & --- \\
+\ref{prem:effective} & Every usable system, every method included, is computable or
+  a computable stochastic process & premise & --- \\
+T1 & Every record has infinitely many consistent models, deterministic or stochastic,
+  that diverge on unobserved settings (\cref{thm:ud-infinite}) & theorem &
+  programs, extensions, chances \\
+K1 & If a method certifies a model at a record, some computable world producing that
+  record makes the certification wrong (\cref{thm:k1-certify}) & corollary &
+  extensions, chances \\
+T2 & For every deterministic computable method and every record, some computable world
+  consistent with the record defeats it; a randomized one succeeds with no fixed
+  positive probability (\cref{thm:ud-gold}; for active methods, \cref{rem:active}; at any oracle level,
+  \cref{thm:ud-gold-rel})
+  & theorem & extensions \\
+P2$^{*}$ & Every usable method faces all worlds computable at its own level
+  (\cref{rem:p2star}) & premise, weaker than P2 & --- \\
+L & Every consistent method is a bias that the record does not determine (\cref{lem:bias}) &
+  lemma & --- \\
+T3 & Which consistent model is shortest depends on the reference machine: a near-tie of
+  $\delta$ bits is reversed by a change of machine that moves no description length by
+  more than $\delta$, and rivals within about $\K(x)$ bits of the shortest disagree at
+  any unobserved setting $x$
+  (\cref{thm:con-machine,thm:con-gap,thm:con-nearmin,con:cor:promote}) & theorem & extensions \\
+T5 & No method separates formulations with identical predictions, or mutually
+  absolutely continuous chance hypotheses with probability 1 under both (\cref{thm:t5-permanent}) & theorem &
+  programs, chances \\
+T4 & The universal predictor is within $K(\nu)$ bits of every model $\nu$; no
+  computable predictor is (\cref{thm:pred-relative,pred:prop:no-computable}) &
+  theorem & extensions, chances \\
+\midrule
+C1 & No method of any kind can certify a theory, deterministic or stochastic, as final
+  & from T1, K1 & \\
+C2 & No usable method is guaranteed, even with any fixed probability, to settle on a
+  final theory & from P2 (P2$^{*}$ for deterministic methods), T2, L & \\
+C3 & Formulations with identical predictions, and chance hypotheses that agree on
+  which events have probability zero, are never told apart with certainty & from T5
+  (T1(b) illustrates) & \\
+C$'$ & Simplicity narrows the field but cannot decide among near-tied survivors that
+  disagree about the unobserved; choosing among them is an imposed constraint;
+  compression still predicts & from L, T3, T4; P2 to read T4's benchmark as unusable & \\
+\bottomrule
+\end{tabular}
+\caption{The steps of the argument in section order. ``Level'' says whether a step
+concerns programs (indices), extensions (behavior) or chance hypotheses (measures).
+With \cref{def:known}, C1 is the main claim that no theory can be known to be final.}
+\label{tab:outline}
+\end{table}
+
+\noindent C2 uses \cref{prem:effective}, and for deterministic methods only its weaker form
+P2$^{*}$. C$'$ uses \cref{prem:effective} only to read the benchmark of T4 as unusable.

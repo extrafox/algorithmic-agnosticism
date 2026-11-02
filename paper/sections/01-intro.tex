@@ -1,0 +1,134 @@
+\section{Introduction}\label{sec:intro}
+
+Much of fundamental physics is organized around the hope of a final theory: a single
+theory of everything from which every regularity follows, and which is not itself
+the approximation of something deeper \citep{weinberg1992}. Some go further and hold
+that the world simply \emph{is} such a structure \citep{tegmark2008}, or that a unique
+computational object underlies all possible physics \citep{wolfram-ruliad2021}. We do
+not ask whether a final theory exists. We ask whether one could ever be \emph{known} to
+be final (\cref{def:known}), and we argue that it could not.
+
+The argument starts from two premises. The first is nearly definitional: every
+observation, measurement or other use of a system leaves a finite record written at
+finite precision (\cref{prem:record}). The second is an assumption we assert and defend
+rather than prove: every system anyone can use, including every method of choosing
+among theories, is computable or a computable stochastic process (\cref{prem:effective}).
+It is the modest physical Church--Turing thesis \citep{piccinini2011}, extended from
+devices to methods.
+
+From these premises the main claim follows in three parts.
+\begin{enumerate}[label=(C\arabic*)]
+  \item \emph{No certification.} Any theory that fits every observation made so far is one
+        of infinitely many that fit them equally well and disagree about what has not yet
+        been observed. So no method of any kind, computable or not, can certify a theory
+        as final: if a method certifies a model, deterministic or stochastic, at some
+        record, a computable world that produces that record makes the certification
+        wrong (\cref{thm:k1-certify}).
+  \item \emph{No reliable discovery.} No usable method is guaranteed, even with any
+        fixed probability, to settle on a final theory. Whatever has been observed so far,
+        there is a possible world that fits all of it in which a deterministic usable
+        method never settles on the right theory; for a randomized usable method and
+        every $p>0$, there is such a world in which it settles with probability less than
+        $p$ (\cref{thm:ud-gold,ud:rem-randomized}). A user can therefore never rule out living in such a
+        world. This part rests on the second premise; for deterministic methods it needs
+        only the weaker premise that every world computable at a method's own level of
+        power is possible (\cref{rem:p2star,thm:ud-gold-rel}).
+  \item \emph{Permanent underdetermination, even in principle.} Even an ideal agent with
+        unlimited data and computing power faces two limits. (a) Formulations that make
+        identical predictions cannot be separated by any method. (b) Chance hypotheses
+        that agree on which events have probability zero cannot be told apart
+        \emph{with certainty} by any method (\cref{thm:t5-permanent}).
+\end{enumerate}
+A corollary follows (C$'$): simplicity narrows the field but cannot decide among the
+survivors that matter. The data fix which models fit; which of them is shortest depends
+on the reference machine. Rivals that fit equally well, are within $\K(x)+O(1)$ bits of
+the shortest, and disagree at an unobserved setting $x$ always exist, and a change of
+machine that moves no description length by more than about that gap makes such a rival the
+unique shortest (\cref{thm:con-nearmin,thm:con-gap,con:cor:promote}). The universal
+mixture predicts within $\K(\nu)$ bits of every model $\nu$ (\cref{thm:pred-relative}).
+Every choice among those survivors---by
+simplicity, beauty, naturalness or unification---is a constraint we impose
+(\cref{lem:bias}). None of this makes the search for compact,
+unified theories pointless. Compact theories compress what is known and commit to
+predictions about what is not, which can be tested (\cref{sec:predict}). What is
+misguided is the goal of a final theory known to be final.
+
+\paragraph{Algorithmic agnosticism.}
+We call this position \emph{algorithmic agnosticism}.\footnote{The name is unrelated
+to ``agnostic learning'' in computational learning theory \citep{kearns1994}.} Huxley, who coined the word, stated agnosticism as a method:
+do not pretend that conclusions are certain which are not demonstrated or demonstrable
+\citep[pp.~245--246]{huxley1889}. In the sense we intend, commonly glossed as neither affirming
+nor denying a claim that evidence cannot settle, we neither affirm nor deny that a final
+theory exists; we hold that none could be known to be one. The position differs from van
+Fraassen's constructive empiricism \citep{vanfraassen1980}, which is agnostic about
+unobservable entities: we are agnostic about which law generates the observations
+themselves. The qualifier \emph{algorithmic} names the framework of the argument, in
+which theories are programs and usable methods are algorithms. For the contrast with
+Müller's \emph{algorithmic idealism} \citep{muller2020,muller2026}, see
+\cref{sec:objections}.
+
+\paragraph{What we do not claim.}
+We do not claim that the world is computable, discrete, continuous, random or
+deterministic, nor that it lacks a true description.
+
+\paragraph{Precursors.}
+That universal laws can in principle be refuted but never verified goes back to Hume
+and was made central by Popper \citep{popper1959}. That a finite record admits arbitrarily many laws,
+so that a law is worth having only if it compresses its data, goes back to Leibniz and
+Weyl \citep{leibniz1686,weyl1932} and was made precise by Chaitin \citep{chaitin2005}.
+Putnam proved that no computable method extrapolates every computable sequence
+\citep{putnam1963}, and Gold that none identifies every computable law in the limit
+\citep{gold1967}; Kelly recast scientific method in these terms
+\citep{kelly1996}. Assuming an objective, computable world, Hutter formalized theories
+of everything as programs selected by description length, and called such a theory
+``subjective'' because it must include the observer's localization within the world
+\citep[Sec.~4]{hutter2010}. He also notes that ``for every model we can construct an
+alternative model that behaves identically in the past'' and predicts differently
+\citep[Sec.~4]{hutter2010}, which is our \cref{thm:ud-infinite}, and he formalizes and examines a
+universal theory of everything that generates all computable universes
+\citep[Sec.~6]{hutter2010}; choosing among such theories by description length is
+machine-relative (\cref{thm:con-machine}). Schmidhuber treats a theory of everything as a
+prior over computable universes and notes that assuming it formally describable
+``imposes a strong inductive bias'' \citep[abstract]{schmidhuber2000}; \cref{lem:bias} makes the
+point general. Sterkenburg argues that Solomonoff prediction cannot justify a
+preference for simplicity: its predictors are mixtures over effective hypotheses, so
+the operative assumption is effectiveness, and the resulting ``simplicity'' depends on
+an arbitrary choice of universal machine \citep{sterkenburg2016}. A strong case for
+simplicity is Vitányi's: ideal MDL is optimal when the data are typical for the true
+hypothesis, and algorithmic statistics separates a record's meaningful information from
+its noise \citep{vitanyi-li2000,gacs2001}; we answer it in \cref{sec:simplicity,sec:objections}.
+Hawking argued from
+G\"odel's theorem that a final theory may be out of reach \citep{hawking2002}, and
+Faizal and colleagues argue from incompleteness that a theory of everything would require
+non-algorithmic understanding \citep{faizal2025}. Kiefer concludes from G\"odel's theorems that,
+unless space-time is fundamentally discrete, ``we can never decide whether a given
+theory is the final one or not'' \citep[abstract]{kiefer2024}. Our route to a similar conclusion
+runs through underdetermination by finite records and the limits of learning, not
+through undecidability within the theory, so it does not depend on the theory's
+arithmetic strength or on whether space-time is discrete. Hossenfelder argues that the
+appeal to beauty and naturalness has misled the search for a final theory \citep{hossenfelder2018}.
+
+\paragraph{Contributions.}
+Little of the mathematics is new; the contribution is the assembly, aimed at a specific
+target. Specifically:
+(i) we show that the core of the claim, no certification (C1) and permanent
+underdetermination (C3), holds for every method whatsoever;
+(ii) we state Gold's theorem in a form in which, whatever record has been observed, some
+world that fits it is one the method never gets right, which answers the reply that a
+method need only succeed in \emph{our} world;
+(iii) we make the machine-relativity of simplicity quantitative for theories fitted to
+finite data (\cref{thm:con-machine}), rather than leaving it as a remark about arbitrary
+constants;
+(iv) we isolate the underdetermination that is permanent even for an ideal agent
+(\cref{thm:t5-permanent}); and
+(v) we reach a conclusion like Kiefer's (above) from finite records and the limits of
+learning alone.
+
+\paragraph{Outline.}
+\Cref{sec:framework} fixes definitions and states and defends the premises.
+\Cref{sec:certify} shows that no record certifies a final theory, and
+\cref{sec:discover} that no usable method reliably finds one.
+\Cref{sec:simplicity} shows that simplicity does not single one out, and
+\cref{sec:ideal} what even an ideal agent cannot know.
+\Cref{sec:predict} explains what the search is nonetheless good for.
+\Cref{sec:objections} answers objections, and \cref{sec:conclusion} concludes.

@@ -1,0 +1,95 @@
+\section{What the search is good for}\label{sec:predict}
+
+The preceding sections are negative about \emph{finality}. Here we explain why the
+search for compact, unified theories is still worthwhile. The reason is prediction. We
+first state the strongest predictive guarantee available, then show that no usable
+method has it, and finally say what compression offers in its place.
+
+\paragraph{The ideal benchmark.}
+Take stochastic models as in \cref{def:model}(b), with the enumeration
+$\nu_1,\nu_2,\ldots$ fixed there and the outcomes of a record forming a string
+$z=z_1\cdots z_n$, and write $\K(\nu)=\min\{\K(i):\nu_i=\nu\}$ for
+the least prefix complexity of an index of $\nu$. The universal mixture
+\[
+  \Univ(z)=\sum_{i\ge1}2^{-\K(i)}\nu_i(z)
+\]
+weights every model by its compressed length and predicts with
+$\Univ(a\mid z)=\Univ(za)/\Univ(z)$. Up to a multiplicative constant it is Solomonoff's
+a priori probability \citep{solomonoff1978,li-vitanyi2019}.
+
+\begin{theorem}[Relative optimality]\label{thm:pred-relative}
+For every lower semicomputable semimeasure $\nu$ and every string $z=z_1\cdots z_n$,
+\[
+  \sum_{t=1}^{n}-\log_2\Univ(z_t\mid z_{<t})\;\le\;-\log_2\nu(z)+\K(\nu).
+\]
+\end{theorem}
+
+\begin{proof}
+If $\nu(z)=0$ the bound is trivial. Otherwise, for every index $i$ of $\nu$ the mixture
+contains the term $2^{-\K(i)}\nu(z)$, so $\Univ(z)\ge2^{-\K(\nu)}\nu(z)$
+\citep[Ch.~4]{li-vitanyi2019}. The conditional
+log-losses telescope to $-\log_2\Univ(z)+\log_2\Univ(\varepsilon)\le-\log_2\Univ(z)$.
+\end{proof}
+
+The bound holds for every sequence, however it was produced, and it assumes nothing
+about the source. Its content is comparative: on any data, the mixture loses at most
+$\K(\nu)$ bits more than any given model $\nu$. The constant depends on the model and
+on the reference machine.
+
+\begin{proposition}[No computable predictor dominates]\label{pred:prop:no-computable}
+Let $\rho$ be a predictor with computable conditionals satisfying
+$\sum_a\rho(a\mid z)\le1$. Write $\K(\rho)$ for the least prefix complexity of a program computing $\rho$'s
+conditionals. There is a computable sequence $\omega$ on which $\rho$'s
+cumulative log-loss after $n$ symbols is at least $n\log_2|\Sig|-O(1)$. Meanwhile the
+deterministic model of $\omega$ has log-loss $0$ and complexity at most
+$\K(\rho)+O(1)$. Hence no computable predictor satisfies a bound of the form of
+\cref{thm:pred-relative}.
+\end{proposition}
+
+\begin{proof}
+At each step, approximate $\rho(a\mid\omega_{<t})$ for every $a\in\Sig$ to within
+$2^{-t}/|\Sig|$ and let $\omega_t$ be the symbol with the least approximation, breaking
+ties in a fixed order. The least conditional is at most $1/|\Sig|$, so
+$\rho(\omega_t\mid\omega_{<t})\le(1+2^{-t+1})/|\Sig|$. Summing $-\log_2$ of these gives
+the bound, since $\sum_t\log_2(1+2^{-t+1})<\infty$. The construction is uniform in a
+program for $\rho$.
+\end{proof}
+
+By \cref{prem:effective}, then, the benchmark is not a usable method: every usable
+predictor is computable, and for each there is a computable sequence on which it does as
+badly as possible. What \cref{thm:pred-relative} supplies is a sense in which weighting
+models by their compressed length is an optimal bias up to $K(\nu)$: relative to every lower
+semicomputable model, on every sequence, it loses at most a constant. It is an ideal;
+usable approximations aim at it, and each is defeated on some computable sequence. Martins draws a related moral for physics from normative
+inductive reasoning: theories should be weighed, not chosen and discarded
+\citep{martins2017}.
+
+\paragraph{What compression offers.}
+The benchmark nevertheless shows what compression is good for. Every model, a lookup
+table included, has outputs at settings not yet observed; what distinguishes a short
+model is its weight. The universal mixture gives a model of length $\K(\nu)$ weight at
+least $2^{-\K(\nu)}$, so by \cref{thm:pred-relative} predicting as that model does costs
+at most $\K(\nu)$ bits, while a lookup table pays about the length of the record.
+Compressing what is known therefore commits a theory cheaply to predictions about what
+is not yet known, and when those predictions are tested, the bias that chose the theory
+is put at risk.
+\begin{itemize}
+  \item Maxwell's equations unified the known laws of electricity and magnetism. They
+        then predicted electromagnetic waves traveling at the speed of light, which
+        Hertz produced.
+  \item Dirac's equation reconciled quantum mechanics with special relativity for the
+        electron. It predicted a particle of the same mass and opposite charge, and the
+        positron was found four years later.
+  \item Compression can also fail. Le Verrier explained the anomalous precession of
+        Mercury, within Newtonian mechanics, by an unseen inner planet, Vulcan. The
+        planet does not exist, and the anomaly was explained by general relativity.
+\end{itemize}
+This is the value of unification, and it is why the search for compact theories of
+everything is worth pursuing: a more compact theory of more phenomena makes cheaper
+commitments beyond the record, and so it can be tested more severely.
+
+Predictive success does not certify finality. Every success is a finite record, and by
+\cref{thm:k1-certify} no finite record certifies that a model is final. Newtonian
+mechanics was confirmed by predictions for two centuries, including the discovery of
+Neptune, and it was not final. A theory of everything confirmed by every test anyone
+performs would be in the same position.

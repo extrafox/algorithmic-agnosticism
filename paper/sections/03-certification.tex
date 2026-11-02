@@ -1,0 +1,104 @@
+\section{No record certifies a final theory}\label{sec:certify}
+
+This section proves that no finite record singles out a final theory, and that no
+method of any kind can therefore certify one. The results concern records alone, and
+they hold whatever produced the records.
+
+\begin{theorem}[Infinite underdetermination]\label{thm:ud-infinite}
+Let $\rec$ be any finite functional record.
+\begin{enumerate}[label=(\alph*)]
+  \item\label{ud:item-a} For every $x\notin\dom(\rec)$ and every $y\in\Str$ there is a
+        model $e\in\Cons(\rec)$ with $\ph{e}$ total and $\ph{e}(x)=y$. Consequently
+        $\Cons(\rec)$ contains an infinite family of total models any two of which
+        differ at \emph{every} $x\notin\dom(\rec)$.
+  \item\label{ud:item-b} For every $e\in\Cons(\rec)$ there are infinitely many
+        $e'\ne e$ with $\ph{e'}=\ph{e}$; all of them lie in $\Cons(\rec)$.
+  \item\label{ud:item-c} Let $r\in\Str$ be the outcome string of any finite record,
+        functional or not (\cref{def:model}). There are infinitely many computable
+        probability measures $\nu$ on $\Seq$ with $\nu(r)>0$ whose predictions after
+        $r$ pairwise differ: $\nu(0\mid r)\ne\nu'(0\mid r)$ for $\nu\ne\nu'$, where
+        $\nu(a\mid r)=\nu(ra)/\nu(r)$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+\ref{ud:item-a} Since $\dom(\rec)$ is finite, the function
+\[
+  f_{x,y}(z)=
+  \begin{cases}
+    y' & \text{if } (z,y')\in\rec,\\
+    y  & \text{if } z=x,\\
+    \varepsilon & \text{otherwise}
+  \end{cases}
+\]
+differs from the constant function $z\mapsto\varepsilon$ on finitely many arguments,
+so it is total computable; any index $e$ for it lies in $\Cons(\rec)$ and has
+$\ph{e}(x)=y$. For the stronger family, let $g_y(z)$ be $y'$ if $(z,y')\in\rec$ and
+$y$ otherwise. Each $g_y$ is total computable and consistent with $\rec$, and for
+$y\ne y'$ the models $g_y,g_{y'}$ differ at every $z\notin\dom(\rec)$.
+
+\ref{ud:item-b} This is the padding lemma for acceptable numberings: there is a
+computable injection $p:\N\times\N\to\N$ with $\ph{p(e,n)}=\ph{e}$ for all $e,n$
+\citep[ch.~1]{rogers1967}. Membership in $\Cons(\rec)$ depends only on $\ph{e}$.
+
+\ref{ud:item-c} Let $k=|\Sig|$ and $m=|r|$. For each rational $q\in(0,1)$ let $\nu_q$ make
+the first $m$ symbols independent and uniform on $\Sig$, and every later symbol
+independently $0$ with probability $q$ and each other symbol with probability
+$(1-q)/(k-1)$. Each $\nu_q$ is computable, $\nu_q(r)=k^{-m}>0$, and
+$\nu_q(0\mid r)=q$.
+\end{proof}
+
+The construction is folklore: Kukla's recipe for a rival to any
+theory $T$---the theory $T''$ that agrees with $T$ wherever the world is observed and
+with some other theory elsewhere \citep{kukla1993}---is the family $g_y$ made precise.
+Part~\ref{ud:item-b} gives models that agree everywhere and differ only as programs;
+we return to it in \cref{sec:ideal}.
+
+\begin{corollary}[No certification]\label{thm:k1-certify}
+Let $M$ be any method whatever: computable or not, deterministic or randomized.
+\begin{enumerate}[label=(\alph*)]
+  \item\label{k1:item-a} If at a finite functional record $\rec$ the method $M$
+        certifies a deterministic model $e$ as final (\cref{def:final}) with positive
+        probability, then there is a total computable world $f$ consistent with $\rec$,
+        with $\ph{e}\ne f$, in which $M$ receives $\rec$ and certifies $e$ with the same
+        probability.
+  \item\label{k1:item-b} If at a record with outcome string $r$ the method $M$
+        certifies a stochastic model $i$ as final with positive probability, then
+        there is a computable measure $\mu\ne\nu_i$ with $\mu(r)>0$; in the world $\mu$,
+        $M$ certifies $i$ wrongly with positive probability.
+\end{enumerate}
+Hence every method that certifies at some record is wrong on some computable world
+that produces that record. A certification can be correct only relative to a
+restricted class of worlds, one that excludes the rivals of \cref{thm:ud-infinite}.
+\end{corollary}
+
+\begin{proof}
+\ref{k1:item-a} Pick $x\notin\dom(\rec)$. If $\ph{e}(x)$ is undefined, every total
+$g_y$ of \cref{thm:ud-infinite}\ref{ud:item-a} is a world consistent with $\rec$ in
+which $e$ is not final. Otherwise choose $y\ne\ph{e}(x)$; the world $g_y$ is
+consistent with $\rec$ and differs from $\ph{e}$ at $x$. In either case the world
+produces the record $\rec$, and $M$'s output depends only on its input (and, if $M$
+is randomized, on its own random bits), so $M$ certifies $e$ there with the same
+probability, wrongly.
+
+\ref{k1:item-b} Take $\mu=\nu_q$ from the proof of
+\cref{thm:ud-infinite}\ref{ud:item-c}, with $q\ne\nu_i(0\mid r)$ if $\nu_i(r)>0$ and
+$q$ arbitrary if $\nu_i(r)=0$. Then $\mu(r)>0$ and $\mu\ne\nu_i$. In the world $\mu$ the
+outcome string $r$ occurs with probability $\mu(r)>0$, and on receiving it $M$
+certifies $i$ with the same positive probability as before, wrongly.
+\end{proof}
+
+The restriction to a class of worlds is a bias in the sense of \cref{def:constraint}: it is
+not supplied by the record.
+
+\begin{remark}[Each rival is refuted eventually]\label{ud:rem-transient}
+Every model that gives a different output from a world $f$ at some setting is
+refuted after finitely many observations of the canonical presentation of $f$. (A
+model that is undefined at some setting leaves $\Cons$ once that setting is
+observed, though no finite computation exhibits its failure.) So each rival constructed in
+\cref{thm:ud-infinite}\ref{ud:item-a} is only transiently consistent with the
+growing record, and one might hope that a method could at least \emph{converge} on
+a final theory without ever certifying it. \Cref{sec:discover} shows that no usable
+method can guarantee even this. The rivals that are never refuted---models that
+agree on every possible record---are the subject of \cref{sec:ideal}.
+\end{remark}

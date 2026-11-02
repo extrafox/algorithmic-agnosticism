@@ -1,0 +1,178 @@
+\section{Objections and replies}\label{sec:objections}
+
+We answer the ten objections that bear most directly on the main claim.
+
+\paragraph{1. ``This is just Hume, or Popper.''}
+Our first result,
+\cref{thm:k1-certify}, is a precise version of the Humean and Popperian point recalled
+in \cref{sec:intro}, and we claim no novelty
+for it. The paper adds three things the Humean and Popperian traditions do not
+supply. First, a usable method need not \emph{verify} a final theory to succeed: it
+could simply settle on one and stay there. \Cref{thm:ud-gold} and
+\cref{ud:rem-randomized} show that no usable method is guaranteed, even with any fixed
+probability, to do that on every computable world compatible with what has been seen.
+Any computable implementation of Popper's falsificationism is such a method, and it
+inherits the limit. Second, some underdetermination is permanent (objection~3); Popper's
+asymmetry between refutation and verification says nothing about rivals that can
+never be refuted. Third, the usual escape from underdetermination, preferring the
+simplest survivor, depends on the choice of universal machine
+(\cref{thm:con-machine}). The Humean point is the first step of the argument, not
+its conclusion.
+
+\paragraph{2. ``A method need only work in our world, not in all worlds.''}
+Every method
+succeeds on some class of worlds and fails on others; we can grant that a method is
+reliable in ours. The question is how anyone could \emph{know} that our world lies
+in its class. By the prefix form of \cref{thm:ud-gold}, every finite record---the
+whole of what anyone has observed, at any time---is consistent with computable worlds
+in which a usable deterministic method never settles (for a randomized method, worlds
+in which its chance of settling is as small as one likes). And for any method whose
+success class meets every record, such as one that identifies the eventually-zero
+worlds, the same record is also consistent with worlds in which it succeeds
+(\cref{lem:bias}).
+The judgment that ours is one of the good worlds is therefore not drawn from the
+records. It is the method's bias, restated as a belief about the world. Belot argues that Bayesian
+convergence theorems make a similar confidence rationally mandatory \citep{belot2013}.
+
+\paragraph{3. ``Underdetermination is only transient.''}
+Each rival in \cref{thm:ud-infinite} disagrees with the others somewhere, so each is
+refuted once the record reaches that setting. Sklar calls this ``transient''
+underdetermination \citep[p.~380]{sklar1975}, and the objection is that it is only a temporary
+state of the evidence;
+Laudan and Leplin add that empirical equivalence is relative to a time and to
+auxiliary assumptions, and may later be broken \citep{laudan-leplin1991}. We grant
+both points rival by rival. Two things remain. First, at every stage infinitely
+many unrefuted rivals still disagree about what comes next, and by the prefix form
+of \cref{thm:ud-gold} no usable method can tell when the rivals that matter are
+gone: the transient phase never announces its end. Stanford argues that recurring
+transient underdetermination, in the form of alternatives no one has thought of, is
+the real threat to realism \citep{stanford2006}; the rivals of \cref{thm:ud-infinite} show that unrefuted alternatives always exist, though they
+are not Stanford's unconceived theories. Second, some underdetermination is not transient at all. Models that
+agree on every possible observation are never separated, and chance hypotheses that
+agree on which events have probability zero are never told apart with certainty by
+any method (\cref{thm:t5-permanent}).
+
+\paragraph{4. ``The rivals are cheap.''}
+Kukla gave algorithms that turn any theory into an empirically equivalent rival
+(\cref{sec:certify}) \citep{kukla1993}. Leplin
+and Laudan reply that such constructions are not genuine scientific rivals
+\citep{leplin-laudan1993}; Kukla later defended them \citep{kukla1996}; and Stanford that rivals produced by a general recipe
+amount to Cartesian skepticism \citep{stanford2001}. Three replies. First, the
+criteria that exclude cheap rivals---independence, naturalness, explanatory
+depth---are exactly the kind of preference \cref{lem:bias} identifies: real, often
+useful, and not supplied by the records. Second, the rivals need not be cheap.
+\Cref{thm:con-nearmin} gives rivals within $\K(x)+O(1)$ bits of the shortest model that
+predict a different outcome at any unobserved setting, so the excluding criterion
+cannot be length. Third, physics supplies rivals no one regards as artificial:
+Newtonian, Lagrangian and Hamiltonian mechanics; matrix and wave mechanics; dual
+descriptions of the same physics; and the interpretations of quantum mechanics
+(\cref{sec:simplicity,sec:ideal}). Nor is the argument skeptical: it posits no
+deceiver and holds for any record, however it was produced.
+
+\paragraph{5. ``Simplicity, or beauty, tracks the truth.''}
+The hope for a final theory is usually a hope that the true theory is simple and
+beautiful \citep{weinberg1992}. Five points.
+\begin{itemize}
+  \item \emph{Description length.} The most precise notion of simplicity depends on
+        the choice of universal machine (\cref{thm:con-machine}): on any finite record,
+        any consistent model can be made the shortest, at a cost of about $\K(e)$
+        bits, so the record leaves open the order of candidates within that margin.
+        Description length is called objective because it is invariant up to an
+        additive constant. We agree, both asymptotically and for comparisons separated
+        by more than that constant; but near-tied candidates that disagree about the
+        unobserved always exist, and a change of machine that moves no description
+        length by more than about the gap makes any of them the shortest
+        (\cref{thm:con-nearmin,thm:con-gap}).
+  \item \emph{Ideal MDL.} \citet{vitanyi-li2000} show that ideal MDL is Bayes-optimal
+        when the data are random for the true hypothesis. We accept this. It is a
+        conditional guarantee whose condition, typicality, no finite record can confirm,
+        since randomness deficiency is uncomputable; and it yields convergence in the
+        limit, never certification.
+  \item \emph{Hard to vary.} Deutsch holds that good explanations are those whose
+        details cannot be varied without spoiling their fit, and that choosing them is
+        rational, not a matter of taste \citep[ch.~1]{deutsch2011}. Taken informally, this is
+        one more constraint in the sense of \cref{lem:bias}; formalized as a count of
+        free parameters or a description length, it inherits machine-relativity. But
+        Deutsch also denies that any explanation is final: ``there can be no such thing
+        as an ultimate explanation'' \citep[ch.~3]{deutsch2011}. His view does not oppose the main
+        claim. He opposes us only on whether the selection is rational,
+        and nothing in our argument requires that it be irrational, only that the
+        records do not make it.
+  \item \emph{Ockham efficiency.} Kelly and Genin prove that an Ockham method, which
+        prefers the simplest answer to a fixed question, converges to the truth with
+        worst-case optimal retractions \citep{kelly2007}, or optimal reversals and
+        cycles of opinion \citep{genin-kelly2019}. This
+        justification is not machine-relative, and we accept it. It is relative to a
+        chosen question and its partition into answers, and it guarantees efficient
+        convergence in the limit, never certification: an Ockham method never knows
+        that it has stopped retracting. It is consistent with our claim.
+  \item \emph{Beauty and naturalness.} Our point is independent of Hossenfelder's
+        diagnosis (\cref{sec:intro}):
+        such criteria are constraints the records do not supply, and no
+        record can confirm that the world satisfies them.
+\end{itemize}
+
+\paragraph{6. ``The success of physics shows convergence on the truth.''}
+The no-miracles argument holds that the predictive success of mature theories would
+be a miracle unless they were approximately true \citep{putnam1975}. We accept the
+success and explain it differently. A compact model of what is known commits itself
+about what is not, and when those commitments survive test the model has earned its
+place (\cref{sec:predict}). The ideal predictor of \cref{thm:pred-relative} enters only as a
+benchmark: it shows that weighting models by compressed length is a
+bias that loses little against any computable model, but no scientist uses it, and
+it does not explain why particular theories succeed. The
+success of physics is evidence that its theories are good compressions; it cannot
+certify that any of them is the last (\cref{thm:k1-certify,sec:predict}).
+
+\paragraph{7. ``Algorithmic probability is itself the law.''}
+Müller's algorithmic idealism \citep{muller2026} shares our starting point and our tools: it begins from
+the observer's record rather than from a world, and it is formalized within
+algorithmic information theory \citep{muller2020}. It also anticipates \cref{thm:con-machine}. In
+\emph{Law without law} \citep{muller2020} Müller holds, citing his own result that the most natural attempt to
+privilege a universal machine fails \citep{muller2010}, that the choice of algorithmic prior is
+arbitrary, and he restricts the theory's predictions to those that are identical for
+every choice. From these postulates he derives that observers will, with high
+probability, come to see an external world governed by simple computable laws. The
+step we decline is his postulate that algorithmic probability \emph{gives the chances}
+of what an observer sees next, which makes it the fundamental law. Read as a candidate
+final theory, this postulate is subject to three limits. No
+record certifies it: every finite record has positive probability under infinitely
+many computable measures that disagree about what comes next
+(\cref{thm:ud-infinite}(c)), so by part (b) of \cref{thm:k1-certify} any certification
+of the universal mixture at a record is wrong in some computable world that produces
+that record.
+Adopting it is a choice of bias (\cref{lem:bias}), and Müller's own restriction to
+machine-invariant predictions concedes that single-step chances are not fixed by the
+theory; its machine-invariant predictions are asymptotic. And the mixture is uncomputable, so no usable agent can apply the law
+it would be (\cref{pred:prop:no-computable}). Algorithmic idealism is therefore not a
+counterexample to our claim but an instance of it: a constraint,
+explicitly chosen, that no observation could confirm as final. The two views agree on
+what records can and cannot settle, and differ only on whether to affirm a law beyond
+them. Müller affirms one; we remain agnostic.
+
+\paragraph{8. ``The second premise begs the question.''}
+Refuting \cref{prem:effective} requires a \emph{usable} hypercomputer: a system whose
+non-computable behavior can be specified, relied on and put to work, not one whose
+user cannot rule out spurious signals or device failure \citep{earman-norton1993}.
+For deterministic methods C2 survives any hypercomputer
+with the power of a Turing oracle, provided theories can use the same power, because
+the diagonal argument reruns at every level of computing power
+(\cref{thm:ud-gold-rel,rem:p2star}). This also answers Faizal and colleagues (\cref{sec:intro}): non-algorithmic
+understanding would help only if it were
+unavailable to the theories it was used to choose among.
+
+\paragraph{9. ``Knowledge needs only reliability, not proof.''}
+On fallibilist and externalist accounts, a belief can be knowledge because it was
+reliably produced or is safe, without the record ruling out every rival. The
+externalist may say that a reliable method that has settled on the final theory, in a
+world where it is final, yields knowledge in their sense. We need not deny this: a
+believer in that world may hold the truth. What no one can do is establish, from the
+records, that they are in that world (C1, C2, \cref{lem:bias}), and that is what
+``known to be final'' means here (\cref{def:known}).
+
+\paragraph{10. ``The argument undermines itself.''}
+\Cref{prem:record,prem:effective} are universal empirical claims, so, as for any
+universal claim, no record certifies them either. We do not claim to know them. We
+assert them as premises and state what would refute each (\cref{sec:framework,rem:p2star};
+objection~8), so every conclusion is conditional on them. This is consistent: the paper claims no certification of a kind it
+shows to be impossible.

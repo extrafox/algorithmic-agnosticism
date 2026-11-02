@@ -1,0 +1,253 @@
+\section{Simplicity does not single one out}\label{sec:simplicity}
+
+The most common preference in the search for a theory of everything is simplicity:
+among the candidates that fit the data, prefer the shortest. Which candidates fit is
+fixed by the record. Which of them is shortest depends on the reference machine, the
+universal computer in which lengths are measured, and there are always rivals that fit
+equally well, are nearly as short, and disagree about what has not been observed.
+
+\subsection{Description length as a constraint}
+
+\begin{definition}[Prefix description system]\label{con:def:prefix}
+A \emph{prefix description system} is a partial computable function
+$U:\{0,1\}^*\times\Str\rightharpoonup\Str$ whose set of programs
+$D_U=\{p : U(p,x)\conv \text{ for some } x\}$ is prefix-free. A program
+$p\in D_U$ determines the model $x\mapsto U(p,x)$; by the $s$-$m$-$n$ theorem an index
+$e_p$ with $\ph{e_p}=U(p,\cdot)$ is computable from $p$. $U$ is \emph{universal} if
+for every prefix description system $V$ there is a string $\sigma_V$ with
+$U(\sigma_V q,x)\simeq V(q,x)$ for all $q,x$. Universal systems exist
+\citep{chaitin1975,li-vitanyi2019}.
+\end{definition}
+
+\begin{definition}[Description length of a record]\label{con:def:KR}
+For a universal $U$ and a nonempty finite functional record $\rec$, a program
+$p\in D_U$ is \emph{consistent with $\rec$} if $U(p,x)=y$ for all $(x,y)\in\rec$.
+Let
+\[
+  \KU{U}(\rec)=\min\{|p| : p\in D_U \text{ consistent with } \rec\},
+\]
+and let the \emph{MDL selection relative to $U$} be the set of models $e_p$ for which
+$p$ is consistent with $\rec$ and $|p|=\KU{U}(\rec)$. For a string $s$ we write
+$\KU{U}(s)=\KU{U}(\{(\varepsilon,s)\})$; $\K$ with no subscript denotes $\KU{U}$ for a
+fixed reference $U$.
+\end{definition}
+
+$\KU{U}(\rec)$ is finite, because a lookup table for $\rec$ is a consistent program.
+Minimum description length (MDL) is a constraint in the sense of
+\cref{def:constraint}: let $c_U(e)=\min\{|p| : p\in D_U,\ e_p=e\}$, with
+$c_U(e)=\infty$ if there is no such $p$. Since $p$ is consistent with $\rec$ exactly
+when $e_p\in\Cons(\rec)$, $\Sel_{c_U}(\rec)$ is the MDL selection relative to $U$. It is
+\emph{imposed} in the sense of \cref{def:constraint}: by \cref{thm:con-machine}(i)
+below, the same record yields different MDL selections under different universal
+machines.
+
+\subsection{The choice of machine}
+
+\begin{theorem}[T3: MDL is machine-relative]\label{thm:con-machine}
+Let $U$ be universal, $\rec$ a nonempty finite functional record, and
+$e\in\Cons(\rec)$. There is a universal prefix description system $U'$ such that
+\begin{enumerate}[label=(\roman*)]
+  \item for every record $\rec'\sqsupseteq\rec$ with $e\in\Cons(\rec')$, the
+        MDL selection relative to $U'$ has a unique shortest consistent program,
+        and it computes $\ph{e}$;
+  \item $\KU{U'}(\rec')\le\KU{U}(\rec')+1$ for every nonempty functional record
+        $\rec'$;
+  \item $\KU{U}(\rec')\le\KU{U'}(\rec')+\KU{U}(e)+O(1)$ for every nonempty functional
+        record $\rec'$, where $\KU{U}(e)$ is the length of a shortest $U$-program that
+        outputs $e$ and the $O(1)$ depends only on $U$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Define $U'(0,x)\simeq\ph{e}(x)$ and $U'(1p,x)\simeq U(p,x)$, with $U'$ undefined on
+all other programs. Then $D_{U'}\subseteq\{0\}\cup 1D_U$, which is prefix-free: $0$ is
+incomparable with every string beginning with $1$, and $1p\sqsubseteq 1q$ forces
+$p\sqsubseteq q$, hence $p=q$ for $p,q\in D_U$. $U'$ is universal with
+$\sigma'_V=1\sigma_V$.
+
+(i)~Since $e\in\Cons(\rec')$ and $\rec'\neq\emptyset$, $\ph{e}$ halts on some input,
+so $0\in D_{U'}$ and $0$ is consistent with $\rec'$. The empty string is not in
+$D_{U'}$, and $1\in D_{U'}$ only if $\varepsilon\in D_U$, which prefix-freeness and
+universality exclude. So $0$ is the unique shortest consistent program.
+
+(ii)~Each $U$-program $p$ becomes the $U'$-program $1p$.
+
+(iii)~Let $V$ read a $U$-program $a$ (self-delimiting, since $a\in D_U$), decode
+$e=U(a,\varepsilon)$, then read a $U'_e$-program $q$ and simulate $U'_e(q,\cdot)$, where
+$U'_e$ is the machine $U'$ built from $e$; the simulation is uniform in $e$. Each
+$U'$-program $q$ then has the $U$-program $\sigma_V a q$, where $a$ is a shortest
+$U$-program for $e$, so $|a|=\KU{U}(e)$.
+\end{proof}
+
+The invariance theorem \citetext{\citealp[\S3]{kolmogorov1965}; \citealp{li-vitanyi2019}} says that two universal
+machines assign description lengths within an additive constant of each other.
+\Cref{thm:con-machine} says what that constant means on finite data. One extra bit in
+the reference machine (ii) makes any chosen consistent candidate the unique simplest
+one, and it stays so until the record refutes it (i). The price, measured in the
+original machine, is at most about $\KU{U}(e)$, the length of the candidate being favored
+(iii). Promoting a candidate far from the minimum, such as a lookup table for the
+record, needs a change of machine with large translation constants (the converse
+after \cref{thm:con-gap}). Promoting a near-tie needs only a
+small one, in the following sense.
+
+\begin{definition}[Pointwise cost of a change of machine]\label{con:def:pointwise}
+Universal prefix description systems $U,U'$ differ \emph{pointwise by at most $c$} if
+$|\KU{U}(\rec')-\KU{U'}(\rec')|\le c$ for every nonempty finite functional record
+$\rec'$.
+\end{definition}
+
+The pointwise cost bounds how far a change of machine moves any description length.
+It is not the translation constant of the invariance theorem, the length of a prefix
+$\sigma$ with $U(\sigma q,x)\simeq U'(q,x)$ for all $q,x$; that constant bounds the
+pointwise cost from one side, but it need not be small.
+
+\begin{theorem}[T3, gap form: near-ties are machine-relative]\label{thm:con-gap}
+Let $U$ be universal, $\rec$ a nonempty finite functional record, $\delta\ge0$ an
+integer, and $q\in D_U$ a program consistent with $\rec$ with
+$|q|\le\KU{U}(\rec)+\delta$. There is a universal prefix description system $U'$ such
+that
+\begin{enumerate}[label=(\roman*)]
+  \item for every record $\rec'\sqsupseteq\rec$ with which $q$ is consistent, the
+        unique shortest $U'$-program consistent with $\rec'$ computes the model
+        $x\mapsto U(q,x)$;
+  \item $\KU{U'}(\rec')\le\KU{U}(\rec')+1$ and $\KU{U}(\rec')\le\KU{U'}(\rec')+\delta$
+        for every nonempty finite functional record $\rec'$, so $U$ and $U'$ differ
+        pointwise by at most $\max(\delta,1)$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Let $\ell=\max(0,|q|-\delta-1)$ and $t=0^\ell$. Define $U'(0s,x)\simeq U(s,x)$ for
+every $s$ and $U'(1t,x)\simeq U(q,x)$, with $U'$ undefined on all other programs. Then
+$D_{U'}\subseteq 0D_U\cup\{1t\}$, which is prefix-free: $1t$ is incomparable with
+every string beginning with $0$, and $0s\sqsubseteq 0s'$ forces $s=s'$ for
+$s,s'\in D_U$. $U'$ is universal with $\sigma'_V=0\sigma_V$. Every $U'$-program other
+than $1t$ has the form $0s$ with $s\in D_U$ and computes the same model as $s$, so
+\begin{equation}\label{con:eq:gap}
+  \KU{U'}(\rec')=
+  \begin{cases}
+    \min\bigl(\KU{U}(\rec')+1,\ \ell+1\bigr) & \text{if $q$ is consistent with $\rec'$},\\
+    \KU{U}(\rec')+1 & \text{otherwise}.
+  \end{cases}
+\end{equation}
+Note that $\KU{U}(\rec')\ge1$ for every nonempty $\rec'$: the empty program is not in
+$D_U$, since otherwise $D_U=\{\varepsilon\}$ and $U$ would not be universal.
+
+(i)~Let $\rec'\sqsupseteq\rec$ with $q$ consistent with $\rec'$. A program consistent
+with $\rec'$ is consistent with $\rec$, so $\KU{U}(\rec')\ge\KU{U}(\rec)\ge|q|-\delta$.
+Hence $\ell+1\le\max(1,|q|-\delta)\le\KU{U}(\rec')<\KU{U}(\rec')+1$. So $1t$, which is
+consistent with $\rec'$, is strictly shorter than every consistent program $0s$, and it
+computes $x\mapsto U(q,x)$.
+
+(ii)~The first inequality is immediate from \eqref{con:eq:gap}. For the second, if
+$\KU{U'}(\rec')=\KU{U}(\rec')+1$ there is nothing to prove. Otherwise
+$\KU{U'}(\rec')=\ell+1$ and $q$ is consistent with $\rec'$, so
+$\KU{U}(\rec')\le|q|\le\ell+1+\delta$.
+\end{proof}
+
+Two features of the theorem matter. First, the cost is pointwise only. The proof gives
+no simulation of $U'$ in $U$ shorter than about $\KU{U}(q)$ bits, since $U'$ must be
+told $q$; so the translation constant may be as large as the bound of
+\cref{thm:con-machine}(iii), while no description length moves by more than
+$\max(\delta,1)$. Second, the converse holds for translation constants. If
+$U(\sigma q',x)\simeq U'(q',x)$ for all $q',x$ and $\KU{U'}\le\KU{U}+c'$, then the
+shortest $U'$-program consistent with $\rec$, prefixed by $\sigma$, is a $U$-program
+for the same model, so the $U'$-selection lies within $|\sigma|+c'$ bits of the
+$U$-minimum. A change of machine with small translation constants reorders only
+near-ties.
+
+\begin{remark}[``Unnatural'' machines]\label{con:rem:natural}
+The standard reply is that $U'$ is unnatural. But naturalness of the
+reference machine is itself an imposed constraint, and no known principle privileges
+one universal machine over another. The most direct attempt, a stationary distribution
+for the process of universal machines simulating one another, does not exist on the
+set of all universal machines; it exists only on restricted subclasses, which
+reintroduces the choice \citep{muller2010}.
+\end{remark}
+
+\subsection{Near-minimal rivals}
+
+\begin{proposition}[Near-minimal rivals]\label{thm:con-nearmin}
+Let $U$ be universal, $\rec$ a nonempty finite functional record, and $p$ a shortest
+program consistent with $\rec$. For every $x\notin\dom(\rec)$ and every $y\in\Str$
+there is a program $q$ consistent with $\rec$ such that $U(q,x)=y$ and
+\[
+  |q|\le\KU{U}(\rec)+\K(x,y)+O(1),
+\]
+where the $O(1)$ depends only on $U$. In particular, for every such $x$ there is a
+consistent $q$ that disagrees at $x$ with the shortest program $p$ (that is,
+$U(q,x)\ne U(p,x)$, including the case $U(p,x)\divg$) and
+$|q|\le\KU{U}(\rec)+\K(x)+O(1)$.
+\end{proposition}
+
+\begin{proof}
+Let $V$ be the prefix description system that, on program $s$ and input $z$, finds the
+unique prefix $a$ of $s$ in $D_U$ (by dovetailing $U$ on the prefixes of $s$), requires
+$U(a,\varepsilon)=\langle x,y\rangle$, confirms that the remainder $p$ of $s$ lies in
+$D_U$, and then outputs $y$ if $z=x$ and $U(p,z)$ otherwise. $D_V\subseteq\{ap : a,p\in
+D_U\}$, which is prefix-free. Take $a$ a shortest $U$-program for $\langle x,y\rangle$
+and set $q=\sigma_V ap$. For $(x',y')\in\rec$ we have $x'\ne x$, so
+$U(q,x')=U(p,x')=y'$; and $U(q,x)=y$. For the last claim, since $|\Sig|\ge2$, choose a
+single symbol $y$ different from $U(p,x)$ (any symbol if $U(p,x)\divg$); then
+$\K(x,y)\le\K(x)+O(1)$.
+\end{proof}
+
+\begin{corollary}[Near-minimal rivals can be promoted]\label{con:cor:promote}
+Let $U$, $\rec$ and $p$ be as in \cref{thm:con-nearmin}, and $x\notin\dom(\rec)$. There
+is a universal $U'$ that differs from $U$ pointwise by at most $\K(x)+O(1)$ and whose
+unique shortest program consistent with $\rec$ computes a model that disagrees with $p$
+at $x$.
+\end{corollary}
+
+\begin{proof}
+Take the rival $q$ of \cref{thm:con-nearmin} that disagrees with $p$ at $x$, and apply
+\cref{thm:con-gap} with $\delta=|q|-\KU{U}(\rec)\le\K(x)+O(1)$.
+\end{proof}
+
+Two margins are in play here, and they are different. The first is the margin of a
+\emph{change of machine}: by \cref{con:cor:promote}, a change that moves no description
+length by more than $\K(x)+O(1)$ bits reverses which candidate MDL selects, in favor of
+one that predicts differently at $x$. For a setting $x$ of bounded complexity this
+margin is a constant. For the canonical record of length $n$ every unobserved setting
+is some $x_m$ with $m\ge n$; the next one costs $\K(x_n)\le\K(n)+O(1)$, at most about $\log n$
+bits, and some later ones, such as $x_{2^k}$ with $2^k\ge n$, cost only about
+$\log\log n$.
+
+The second margin is that of \emph{algorithmic statistics} for a fixed machine.
+Algorithmic statistics draws the most that can be drawn from a record without a choice
+among near-ties. The Kolmogorov structure function and the minimal sufficient statistic
+split the record's information into a meaningful part, a simplest model for which the
+record is typical, and an accidental remainder
+\citep{gacs2001,vereshchagin-vitanyi2004}. Three features of that split leave the
+near-ties standing. It is determined only up to additive terms logarithmic in the
+length $n$ of the record; its models are sets or distributions that contain the
+record, so it describes what has been observed, not how the record extends; and it is
+neither computable nor usefully approximable \citep[Sec.~VII]{vereshchagin-vitanyi2004}.
+The rivals of \cref{thm:con-nearmin} at the next setting cost at most
+$\K(n)+O(1)$, about $\log n$, extra bits, so they lie inside the margin within which
+the structure function, for any fixed machine, declares itself indifferent. This margin
+does not depend on a change of machine.
+
+\subsection{Other preferences, and serious rivals}
+
+Simplicity is not the only preference at work in the search for a final theory.
+Naturalness, beauty, symmetry, and unification are also orderings on candidate models,
+and so constraints in the sense of \cref{def:constraint}: each ranks models that the
+record cannot tell apart.
+
+Nor are the surviving rivals only gerrymanders. Physics supplies rivals of comparable
+compactness that agree on every prediction. When two formulations are related by a
+computable, prediction-preserving translation $\tau$, their description lengths differ
+by at most $\K(\tau)+O(1)$: a program for one formulation, prefixed by a
+self-delimiting program for $\tau$, is a program for the other. For the explicit
+translations below $\K(\tau)$ is the length of a short procedure, so if one formulation
+is a shortest consistent program, the other is a near-tie of at most $\K(\tau)+O(1)$
+bits, and by \cref{thm:con-gap} a change of machine that moves no description length by
+more than that makes it the unique selection. Newtonian, Lagrangian and Hamiltonian
+mechanics agree, for conservative systems with a regular Lagrangian, through the
+Legendre transform, while their primitives differ: forces along trajectories, a
+variational principle over histories, flows on phase space. Heisenberg's matrix
+mechanics and Schr\"odinger's wave mechanics began from incompatible pictures and were
+shown equivalent, incompletely by Schr\"odinger \citep{schrodinger1926equiv} and
+rigorously by von Neumann \citep{vonneumann1932}; string-theoretic dualities are
+candidates of the same kind (\cref{sec:ideal}).

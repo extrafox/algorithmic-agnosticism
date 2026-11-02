@@ -1,0 +1,131 @@
+\section{What even an ideal agent cannot know}\label{sec:ideal}
+
+An agent with unlimited computing power escapes \cref{thm:ud-gold}. In a deterministic
+computable world every divergent rival is refuted after finitely many observations
+(\cref{ud:rem-transient}), and enumeration with an oracle for totality converges on the
+true behavior (\cref{sec:discover}). Two things remain even for such an agent: rival
+\emph{formulations} of one final theory, and rival \emph{chance hypotheses}, which leave
+the final theory itself undetermined.
+
+\begin{theorem}[T5: Permanent underdetermination]\label{thm:t5-permanent}
+\leavevmode
+\begin{enumerate}[label=(\alph*)]
+  \item \emph{Formulations.} If two models are extensionally equal
+        (\cref{def:model})---deterministic models $e,e'$ with $\ph{e}=\ph{e'}$, or
+        stochastic models $i,j$ with $\nu_i=\nu_j$---then they assign the same
+        outcome, or the same probability, to every possible record. No method of any kind, computable or not, separates
+        them.
+  \item \emph{Chance hypotheses.} Let $\mu$ and $\mu'$ be distinct computable
+        measures on $\Seq$ that are mutually absolutely continuous, that is, agree on
+        which events have probability zero: $\mu(B)=0$ if and only if $\mu'(B)=0$, for
+        every Borel set $B$. Let $L$ be any method, computable or not, mapping finite outcome
+        strings to models. If $L$ converges to a model of $\mu$ with $\mu$-probability
+        $1$, then it converges to a model of $\mu'$ with $\mu'$-probability $0$. In
+        particular, no method identifies the correct one of $\mu,\mu'$ with probability
+        $1$ under both.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+(a) A record's outcomes are fixed by its settings and the model's behavior on them
+(\cref{def:model}); extensionally equal models agree on both, so every method receives
+the same input whichever of them is true.
+
+(b) For a set $I$ of models (a countable set of indices), the event that $L$ converges
+to a member of $I$ is
+\[
+  A_I=\bigcup_{N}\,\bigcup_{i\in I}\,\bigcap_{n\ge N}\{\omega\in\Seq : L(\omega_{\le n})=i\}.
+\]
+Each set $\{\omega : L(\omega_{\le n})=i\}$ depends only on the first $n$ symbols, so it
+is a finite union of cylinders; the unions and intersections are countable. Hence $A_I$
+is Borel whatever $L$ is. Let $I$ and $I'$ be the sets of models of
+$\mu$ and of $\mu'$, that is, of indices $i$ with $\nu_i=\mu$ and with $\nu_i=\mu'$. They are disjoint because $\mu\neq\mu'$, so $A_I\cap A_{I'}=\emptyset$.
+If $\mu(A_I)=1$ then $\mu(A_{I'})=0$, and by absolute continuity $\mu'(A_{I'})=0$.
+\end{proof}
+
+The argument uses no property of $\mu,\mu'$ beyond mutual absolute continuity. The
+restriction to computable measures loses nothing: a probability measure that has a
+stochastic model is lower semicomputable, and a lower semicomputable probability
+measure is computable, since $\nu(r)=1-\sum_{r'\ne r,\,|r'|=|r|}\nu(r')$ is also upper
+semicomputable \citep{li-vitanyi2019}.
+
+A method that uses internal randomness is covered as well, provided each conjecture
+depends on $\omega_{\le n}$ and on finitely many of the method's random bits $\rho$
+(possibly a number of them that depends on the bits read). Then the success event $B$
+is a Borel subset of $\Seq\times\{0,1\}^{\infty}$, and (b) applies to the products
+$\mu\times\lambda$ and $\mu'\times\lambda$, where $\lambda$ is the uniform measure on the
+random bits. These products are again mutually absolutely continuous: by Fubini's
+theorem, $(\mu\times\lambda)(B)=\int\mu(B^{\rho})\,d\lambda(\rho)$, which vanishes if and
+only if $\mu(B^{\rho})=0$ for $\lambda$-almost every $\rho$, hence if and only if
+$\mu'(B^{\rho})=0$ for $\lambda$-almost every $\rho$, hence if and only if
+$(\mu'\times\lambda)(B)=0$.
+
+\paragraph{Instances of (a).}
+The trivial instance, as an illustration only, is the padding lemma: every behavior has
+infinitely many programs (\cref{thm:ud-infinite}(b)). The serious instances are rival \emph{formulations} that
+physicists take seriously.
+\begin{itemize}
+  \item \textbf{Dualities.} Pairs of theories with very different ingredients are held to
+        describe the same physics. In T-duality, string theory on a circle of radius
+        $R$ is equivalent to string theory on a circle of radius $\alpha'/R$
+        \citep{polchinski1998}. In the AdS/CFT correspondence, string theory on an
+        anti-de Sitter space is conjectured to be equivalent to a gauge theory without
+        gravity on its boundary \citep{maldacena1998}. Where such a duality holds, no
+        record says which side is fundamental, or whether the space has one size or the
+        other.
+  \item \textbf{Interpretations of quantum mechanics.} The following all assign Born-rule
+        probabilities to every record:
+        \begin{itemize}
+          \item Copenhagen-style quantum mechanics, in which the probabilities are
+                fundamental;
+          \item de Broglie--Bohm theory in quantum equilibrium, which is deterministic,
+                with randomness confined to the initial positions
+                \citep{bohm1952,dgz1992};
+          \item Everettian quantum mechanics, which is deterministic unitary evolution,
+                with Born weights for branches \citep{everett1957,wallace2012}.
+        \end{itemize}
+        As stochastic models they are therefore extensionally equal. The question ``is
+        the world fundamentally random?'' is not settled by any record.
+\end{itemize}
+Two candidates do not belong on the list. Objective-collapse theories \citep{grw1986}
+predict small departures from standard unitary quantum predictions (suppressed
+macroscopic interference, spontaneous heating), so they are rivals that records can in
+principle refute, not instances of (a). Superdeterministic proposals are programmatic:
+their proponents describe the models as ``still in their infancy''
+\citep[Sec.~5]{hossenfelder-palmer2020}.
+
+\paragraph{Instances of (b).}
+The simplest example is two coin models. Under $\mu$ every toss lands heads with
+probability $1/2$. Under $\mu'$ the first toss lands heads with probability $1/3$ and
+every later toss with probability $1/2$. These are distinct chance hypotheses, since
+they disagree about a definite event. Because they differ in only finitely many
+conditional probabilities, each of which is strictly between $0$ and $1$, they are
+mutually absolutely continuous (the density of $\mu'$ with respect to $\mu$ is $2/3$ or
+$4/3$). More generally, two theories of chance are mutually absolutely continuous if
+their conditional probabilities differ at only finitely many histories in total, at
+each of which both conditionals lie in $(0,1)$: the density is then a finite product of
+ratios bounded away from $0$ and $\infty$. For independent trials with pairwise equivalent
+factors $\mu_n,\mu'_n$, Kakutani's criterion gives mutual absolute continuity exactly
+when $\prod_n\int\sqrt{d\mu_n\,d\mu'_n}>0$; for Bernoulli factors with probabilities
+$p_n,q_n$ bounded away from $0$ and $1$, this holds if and only if
+$\sum_n(p_n-q_n)^2<\infty$ \citep{kakutani1948}. A method may still guess well: if the
+first toss has heads probability $0.99$ under one hypothesis and $0.01$ under the other,
+guessing from that toss is right with probability $0.99$ either way. What no method
+achieves is convergence on the correct hypothesis with probability $1$ under both.
+Positive results exist for restricted classes. \Citet{vitanyi-chater2017} identify a
+computable measure in the limit when the data are independent draws from a
+computably enumerable class of measures; for dependent data their learner returns a
+measure for which the sequence is typical, and there may be several, which is the gap
+(b) exhibits. Without such restrictions, algorithmic identification of probabilities
+fails \citep{bienvenu2018}.
+
+\paragraph{Scope.}
+The theorem takes a physical formulation to be a model in the sense of \cref{def:model},
+so that whether a formulation is fundamental is a property of the model rather than of
+its predictions. Part (a) then shows that the \emph{fundamental formulation} of a theory
+of everything is never settled by data: two candidates with the same predictions may
+disagree about what exists (strings in one space or a gauge theory on its boundary;
+particles with trajectories or a branching wave function). Part (b) reaches the final
+theory itself: for theories of chance, a rival that agrees on which events have
+probability zero puts the final theory, in the sense of \cref{def:final}, beyond
+identification with probability 1 under both.

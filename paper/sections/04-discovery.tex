@@ -1,0 +1,223 @@
+\section{No usable method finds one}\label{sec:discover}
+
+\Cref{thm:k1-certify} rules out certifying a final theory. A weaker goal remains: a
+method might converge on a final theory without ever announcing that it has. This
+section shows that no usable method is guaranteed, even with any fixed probability, to
+settle on a final theory, and that whatever success a method has is bought by a bias
+the record does not supply.
+
+Fix the length-lexicographic enumeration $x_0,x_1,x_2,\dots$ of $\Str$, a computable
+bijection $\N\to\Str$, and identify a total $f:\Str\to\Str$ with the sequence
+$f(x_0),f(x_1),\dots$. For a finite sequence $\sigma=(y_0,\dots,y_{n-1})$ write
+$\rec_\sigma=\big((x_0,y_0),\dots,(x_{n-1},y_{n-1})\big)$, write $\sigma\tau$ for
+concatenation, $\sigma\sqsubseteq\tau$ for the prefix order, and
+$f\restriction n=(f(x_0),\dots,f(x_{n-1}))$. For a record $\rec$ already in hand,
+$\rec\frown\rec_\tau$ is the record $\rec$ followed by the observations of $\rec_\tau$;
+the presentation of $f$ after $\rec$ is the chain
+$\rec\frown\rec_{f\restriction 0}\sqsubseteq\rec\frown\rec_{f\restriction 1}
+\sqsubseteq\cdots$ (\cref{def:learner}). Fix two distinct symbols $0,1\in\Sig$.
+
+Any finite functional record $\rec$ determines a finite sequence $\sigma_\rec$: take
+the least $n$ with $\dom(\rec)\subseteq\{x_0,\dots,x_{n-1}\}$ and set the $i$th entry to
+the outcome $\rec$ records at $x_i$, or to $0$ if it records none. Every total $f$
+extending $\sigma_\rec$ is consistent with $\rec$.
+
+\begin{theorem}[T2: Non-identifiability from any record; after \citet{putnam1963,gold1967}]\label{thm:ud-gold}
+Let $L$ be a computable method (\cref{def:learner}), possibly partial, and $\rec$ a
+finite functional record. There is a total computable world $f$,
+consistent with $\rec$, that $L$ does not identify in the limit after $\rec$.
+\end{theorem}
+
+\begin{proof}
+We build finite sequences $\sigma_0\sqsubseteq\sigma_1\sqsubseteq\cdots$ with
+$\sigma_0=\sigma_\rec$. Given $\sigma_s$, search, dovetailing over $k$ and computation
+time, for a $k$ such that $h=L(\rec\frown\rec_{\sigma_s0^k})$ is defined and
+\[
+  \ph{h}\bigl(x_{|\sigma_s|+k}\bigr)\conv = 0,
+\]
+that is, the current conjecture predicts that the record continues with $0$. If the
+search succeeds, set $\sigma_{s+1}=\sigma_s0^k1$.
+
+Suppose the search at some stage $s$ never succeeds. Then $L$ does not identify
+$g=\sigma_s0^\infty$ after $\rec$. If it did, it would be defined on every record of
+the presentation of $g$ after $\rec$, and from some point on its conjecture would be a
+fixed index for $g$; that index outputs $0$ at every argument beyond $\sigma_s$, so the
+search would succeed. The world $g$ is total computable and extends $\sigma_\rec$, so it
+is consistent with $\rec$.
+
+Otherwise every stage succeeds, and $f=\bigcup_s\sigma_s$ is total computable and
+extends $\sigma_\rec$, so it is consistent with $\rec$. The conjecture $h_s$ found at
+stage $s$ is the output of $L$ on a record of the presentation of $f$ after $\rec$,
+since $\sigma_s0^k\sqsubseteq f$, and it predicts $0$ where $f$ has $1$, so
+$\ph{h_s}\ne f$. These records grow with $s$. If $L$ converged on $f$ to some $h^*$, then
+$h_s=h^*$ for all large $s$, so $\ph{h^*}\ne f$.
+\end{proof}
+
+A method that does well on the simplest worlds (here, those that are eventually
+constant) for that very reason never settles on the right theory in another computable
+world, and that world can be chosen to agree with any record already in hand. The world
+is not exotic. The construction is uniform in $L$ and $\rec$. If every stage succeeds,
+$\K(f)\le\K(L,\rec)+O(1)\le\K(L)+\K(\rec)+O(1)$, where $\K(L)$ is the complexity of an
+index for $L$. If stage $s$ stalls, the world is eventually constant and
+$\K(g)\le\K(L,\rec)+\K(s)+O(1)$. Either way its complexity is set by the method, the
+record and at most one stage number, and its records are compressible, not atypical or
+non-stochastic in the sense of algorithmic statistics \citep{gacs2001}.
+
+\begin{remark}[Randomized methods]\label{ud:rem-randomized}
+A method may also flip a coin of computable bias. The theorem covers such methods in
+the following form. A probabilistic method
+that identifies every computable world with probability greater than $1/2$ can be
+replaced by a deterministic computable method that identifies the same worlds
+\citep[Thm.~3.21 with $n=1$]{pitt1989}, so by \cref{thm:ud-gold} no probabilistic method identifies every
+computable world with probability greater than $1/2$. Success with a smaller probability, bounded below by
+a fixed $p>0$ for every world, corresponds to identification by a finite team of
+deterministic methods, and the class of all computable worlds is not identifiable by
+any finite team either \citetext{\citealp[Thm.~3.36]{pitt1989}; \citealp[Thm.~3.1]{smith1982}; \citealp{pitt-smith1988}}. Both facts hold
+relative to any record: the class of computable worlds extending $\sigma_\rec$ is not
+finite-team identifiable, since a team for it would yield one for all computable worlds
+via $g\mapsto\sigma_\rec g$ and the corresponding computable shift of indices. So, given
+any record, no usable randomized method that receives the presentation identifies every
+computable world consistent with it with any fixed positive probability. This is a
+uniform statement: it does not say that the method fails almost surely in some single
+world, and a randomized method can identify every computable world with \emph{some}
+positive probability, for instance by guessing an index at random and keeping it.
+\end{remark}
+
+\begin{remark}[Active methods]\label{rem:active}
+A method may also choose which settings to observe. An \emph{active} method reads the
+record so far, and possibly random bits, and outputs a conjecture and a next setting to
+query; the world answers the query, and the answer extends the record. Active methods
+gain nothing here. Given a computable active method $M$ and a record $\rec$, let $L_M$
+be the method that receives the presentation after $\rec$ and, on the record
+$\rec\frown\rec_{f\restriction n}$, simulates $M$ from $\rec$ for $n$ computation steps
+with the same random bits, answering each query from the record and halting the
+simulation at the first query the record does not yet answer; $L_M$ outputs the last
+conjecture of $M$ reached. $L_M$ is computable, and randomized exactly when $M$ is.
+Every setting is eventually answered, so every step of a run of $M$ in which each
+step halts is eventually reached; if on given random bits $M$ identifies $f$, its
+conjectures are eventually constant at an index of $f$, and so are those of $L_M$.
+Hence $L_M$ identifies every world that $M$ identifies, with at least the same
+probability. Applied to $L_M$, \cref{thm:ud-gold} and \cref{ud:rem-randomized} give,
+for every record, a computable world consistent with it that $M$ does not identify, or,
+for randomized $M$ and every $p>0$, one that $M$ identifies with probability less than
+$p$.
+\end{remark}
+
+\begin{corollary}[No record rules out failure]\label{ud:cor-every-method-fails}
+Let $L$ be a usable method, possibly partial, and $\rec$ a finite functional record that
+$L$ has observed; $L$ may receive the presentation or choose its own queries. If $L$
+is deterministic, some computable world consistent with $\rec$ \emph{defeats} it: in
+that world, $L$ never settles on the right theory. If $L$ is randomized, then for every
+$p>0$ there is a computable world consistent with $\rec$ that $L$ identifies with
+probability less than $p$. In either case no
+record tells $L$'s user that the world is not such a world.
+\end{corollary}
+
+\begin{proof}
+By \cref{prem:effective} $L$ is computable or a computable probabilistic method;
+apply \cref{thm:ud-gold} or \cref{ud:rem-randomized}, and for active methods
+\cref{rem:active}, to $\rec$.
+\end{proof}
+
+\paragraph{The limit does not depend on the level of computing power.}
+\Cref{thm:ud-gold} is not an artifact of ordinary computers. Fix any set $A\subseteq\N$
+as an oracle, and let $(\ph{e}^A)_{e\in\N}$ be an acceptable numbering of the functions
+partial computable relative to $A$, which exists by the relativized universal-function
+and $s$-$m$-$n$ theorems \citep[ch.~9]{rogers1967}; the proof below uses only that the universal
+function is $A$-computable. Call a model at level $A$ an index $e$ of
+$\ph{e}^A$, and a world at level $A$ a total $A$-computable function; identification
+at level $A$ is defined as in \cref{def:learner}, with $\ph{e}^A$ in place of
+$\ph{e}$.
+
+\begin{theorem}[T2 at every level]\label{thm:ud-gold-rel}
+Let $A\subseteq\N$, let $L$ be an $A$-computable method, possibly partial, that outputs
+models at level $A$, that is, indices in $(\ph{e}^A)$ rather than ordinary indices, and
+let $\rec$ be a finite functional record. There is a total $A$-computable world $f$,
+consistent with $\rec$, that $L$ does not identify at level $A$ after $\rec$.
+\end{theorem}
+
+\begin{proof}
+The proof of \cref{thm:ud-gold} goes through with $\ph{}^A$ in place of $\ph{}$. Given
+$\sigma_s$ (with $\sigma_0=\sigma_\rec$), search for $k$ such that
+$h=L(\rec\frown\rec_{\sigma_s0^k})$ is defined and $\ph{h}^A(x_{|\sigma_s|+k})\conv=0$.
+The computations of $L$ and of $\ph{h}^A$ can be simulated with access to $A$, so the
+search, dovetailed over $k$ and computation time, is $A$-effective. If it never
+succeeds at stage $s$, then $L$ does not identify $\sigma_s0^\infty$ at level $A$, for
+the same reason as before, and that world is computable, hence $A$-computable.
+Otherwise set $\sigma_{s+1}=\sigma_s0^k1$. Then $f=\bigcup_s\sigma_s$ is total, extends
+$\sigma_\rec$, and is $A$-computable, since every stage is effective relative to $A$.
+Each conjecture $h_s$ found at stage $s$ predicts $0$ where $f$ has $1$, so if $L$
+converged on $f$ to some $h^*$ then $\ph{h^*}^A\ne f$.
+\end{proof}
+
+The relativized theorem needs the worlds to be at the method's level: a method strictly
+more powerful than the worlds it faces can succeed, as the ideal-agent concession below
+shows. For deterministic methods, C2 therefore needs only the following premise.
+
+\begingroup
+\renewcommand{\thepremise}{P2$^{*}$}%
+\renewcommand{\theHpremise}{P2star}%
+\addtocounter{premise}{-1}%
+\begin{premise}[Methods and worlds share a level]\label{rem:p2star}
+For every usable method $L$ there is a set $A\subseteq\N$ such that $L$ is $A$-computable, its outputs are read as models at level $A$, and its guarantee must cover every total $A$-computable world consistent with the record: every such world is a possible world. A model at level $A$ is final for a world $f$ if it computes $f$ relative to $A$.
+\end{premise}
+\endgroup
+
+\noindent\emph{Refuted by:} a usable method more powerful than every world its guarantee
+must cover, for instance a usable oracle whose power the theories it chooses among
+cannot share.
+
+\Cref{prem:effective}, together with the guarantee of \cref{def:learner}, which covers
+every total computable world consistent with the record, is the case $A=\emptyset$ of
+P2$^{*}$. Under P2$^{*}$, \cref{thm:ud-gold-rel} applies at the method's own level, so
+a usable hypercomputer of oracle strength, whose power the theories share, does not
+escape C2. Hypercomputers not equivalent to a single oracle, such as infinite-time
+Turing machines, would need their own argument. The
+reductions of \citet{pitt1989} behind \cref{ud:rem-randomized} are uniform simulations
+and should relativize, but we have not verified this, so P2$^{*}$ serves for
+deterministic methods only.
+
+\begin{lemma}[L: Every consistent method is a bias]\label{lem:bias}
+Let $L$ be a method that outputs, on each functional record $\rec$, a model in
+$\Cons(\rec)$.
+\begin{enumerate}[label=(\roman*)]
+  \item $L$ is a record-indexed constraint (\cref{def:constraint}): with
+        $c_\rec(e)=0$ if $e=L(\rec)$ and $c_\rec(e)=1$ otherwise,
+        $\Sel_c(\rec)=\{L(\rec)\}$. For every functional record $\rec$ there is a
+        method $L'$ that outputs consistent models, is computable if $L$ is, and
+        selects differently from $L$ at $\rec$.
+  \item For a finite functional record $\rec$, let $K_L$ be the class of total
+        computable worlds consistent with $\rec$ that $L$ identifies after $\rec$. If
+        $L$ is computable (deterministic), some world consistent with $\rec$ lies
+        outside $K_L$; and if $L$ identifies after $\rec$ the eventually-zero worlds
+        consistent with $\rec$, some world lies inside $K_L$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+(i) The first claim is immediate from the definition, since $L(\rec)\in\Cons(\rec)$ has
+cost $0$ and every other model cost $1$. For the second, $\Cons(\rec)$ is infinite by
+\cref{thm:ud-infinite}, so it contains some $e'\ne L(\rec)$. Let $L'$ agree with $L$ on
+every record other than $\rec$, and let $L'(\rec)=e'$. Then $L'$ outputs consistent
+models, it differs from $L$ only on one input, so it is computable if $L$ is, and
+$\Sel_{c'}(\rec)=\{e'\}\neq\{L(\rec)\}$, where $c'$ is the constraint of $L'$ given by
+(i). So the record does not determine the
+constraint, which is what it means for the constraint to be imposed
+(\cref{def:constraint}). For (ii), the first claim is \cref{thm:ud-gold}; for the
+second, the world $\sigma_\rec0^\infty$ is eventually zero and consistent with $\rec$.
+\end{proof}
+
+So choosing a method is choosing a class $K_L$ of worlds to be right about, and no
+record decides whether the actual world belongs to that class. \Cref{sec:simplicity}
+examines simplicity as a way of making this choice.
+
+\paragraph{The ideal-agent concession.}
+\Cref{thm:ud-gold} binds computable methods, and the restriction is not idle. A
+method with an oracle for the totality problem can output the least total index
+consistent with the current record; every smaller total index computes a different
+function and is eventually refuted, so this \emph{identification by enumeration}
+converges to a correct model on every total computable world
+\citep{putnam1963,gold1967}. An ideal agent of this
+kind therefore does converge on the true behavior of any deterministic computable
+world, though it never knows when it has. The limit of \cref{thm:ud-gold} is
+computational.
