@@ -6,6 +6,7 @@ authors:
     family-names: "Taylor"
     email: "christopher@extrafox.me"
 version: "1.0"
+doi: "10.5281/zenodo.23900493"
 date-released: 2026-11-02
 license: CC-BY-4.0
 repository-code: "https://github.com/extrafox/algorithmic-agnosticism"
@@ -27,6 +28,7 @@ preferred-citation:
       family-names: "Taylor"
   year: 2026
   status: preprint
+  doi: "10.5281/zenodo.23900493"
   notes: "Version 1.0, preprint; not peer-reviewed."
   url: "https://github.com/extrafox/algorithmic-agnosticism"
   license: CC-BY-4.0

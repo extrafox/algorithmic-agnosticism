@@ -55,7 +55,7 @@ of errors in the proofs or in how other authors' work is described are especiall
 
 ## How to cite
 
-A DOI will be added when the first version is archived on Zenodo. Until then:
+DOI: [10.5281/zenodo.23900493](https://doi.org/10.5281/zenodo.23900493) (all versions; version 1.0 is [10.5281/zenodo.23900494](https://doi.org/10.5281/zenodo.23900494)).
 
 ```bibtex
 @misc{taylor2026agnosticism,
@@ -63,6 +63,7 @@ A DOI will be added when the first version is archived on Zenodo. Until then:
   title        = {Algorithmic Agnosticism: Why No Theory of Everything Can Be Known to Be Final},
   year         = {2026},
   note         = {Version 1.0, preprint; not peer-reviewed},
+  doi          = {10.5281/zenodo.23900493},
   howpublished = {\url{https://github.com/extrafox/algorithmic-agnosticism}}
 }
 ```

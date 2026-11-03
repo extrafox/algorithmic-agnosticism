@@ -1,0 +1,12 @@
+{
+  "title": "Algorithmic Agnosticism: Why No Theory of Everything Can Be Known to Be Final",
+  "upload_type": "publication",
+  "publication_type": "preprint",
+  "creators": [
+    {
+      "name": "Taylor, Christopher S."
+    }
+  ],
+  "license": "cc-by-4.0",
+  "description": "Physicists hope for a final theory of everything. We argue that no such theory could be known to be final, where knowing finality means that the observations rule out every consistent rival. We assume that every observation is a finite record and every usable method for choosing theories is computable. From learning theory and algorithmic information theory we show three things. First, no method of any kind can certify a theory as final: every finite record fits infinitely many computable theories that disagree about the unobserved. Second, no usable method is guaranteed to settle on a final theory: each record fits some possible world in which the method never settles on the right theory, or, if it uses chance, settles with arbitrarily small probability. Third, even an agent with unlimited data and computation cannot separate formulations with identical predictions or tell apart with certainty chance hypotheses that agree on which events have probability zero. Simplicity does not decide. The data fix which theories fit, but their lengths depend on the universal computer chosen to measure them. Rivals that fit equally well, are nearly as short and disagree about the unobserved always exist, and a change of computer that alters no length by more than about their gap makes one the shortest. Weighting theories by length predicts within as many bits of each model as it takes to describe that model, but choosing among survivors is a constraint we impose. Compact, unified theories remain worth seeking for their testable predictions. We call this position algorithmic agnosticism."
+}
